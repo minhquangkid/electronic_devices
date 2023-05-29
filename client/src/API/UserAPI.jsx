@@ -12,7 +12,7 @@ const UserAPI = {
 	},
 
 	postSignUp: (query) => {
-		const url = `/users/signup/${query}`;
+		const url = `/users/signup${query}`;
 		return axiosClient.post(url);
 	},
 };
