@@ -2,14 +2,47 @@ const bcrypt = require('bcryptjs');
 
 const User = require('../models/users');
 
+// exports.postLogin = (req, res, next) => { // đây là cách trả về bằng status code, FE sẽ dựa theo status code mà handle
+//   const email = req.query.email;
+//   const password = req.query.password;
+//   User.findOne({ email: email })
+//     .then(user => {
+//       if (!user) {
+//         return res.status(404).send({ message: 'Incorrect email!' });
+//       }
+//       bcrypt
+//         .compare(password, user.password)
+//         .then(doMatch => {
+//           if (doMatch) {
+//             req.session.isLoggedIn = true;
+//             req.session.user = user;
+//             return req.session.save(err => {
+//               if (err) {
+//                 console.log(err);
+//                 return res.status(500).send({ message: 'Login failed' });
+//               }
+//               res.status(200).send({ message: 'Login succeeded' });
+//             });
+//           }
+//           res.status(401).send({ message: 'Incorrect password!' });
+//         })
+//         .catch(err => {
+//           console.log(err);
+//           res.status(500).send({ message: 'Login failed' });
+//         });
+//     })
+//     .catch(err => console.log(err));
+// };
+
+// còn đây là cách trả về mà FE sẽ dựa theo message để handle
+
 exports.postLogin = (req, res, next) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  const email = req.query.email;
+  const password = req.query.password;
   User.findOne({ email: email })
     .then(user => {
       if (!user) {
-        req.flash('error', 'Invalid email or password.');
-        return res.status(400).send({message : "Login failed"})
+        return res.status(400).send({ message: 'Incorrect email!' });
       }
       bcrypt
         .compare(password, user.password)
@@ -18,20 +51,23 @@ exports.postLogin = (req, res, next) => {
             req.session.isLoggedIn = true;
             req.session.user = user;
             return req.session.save(err => {
-              console.log(err);
-              res.status(200).send({message : "Login succeeded"})
+              if (err) {
+                console.log(err);
+                return res.status(400).send({ message: 'Login failed' });
+              }
+              res.status(200).send({ message: 'Login succeeded' });
             });
           }
-          req.flash('error', 'Invalid email or password.');
-          res.status(400).send({message : "Login failed"})
+          res.status(400).send({ message: 'Incorrect password!' });
         })
         .catch(err => {
           console.log(err);
-          res.status(400).send({message : "Login failed"})
+          res.status(400).send({ message: 'Login failed' });
         });
     })
     .catch(err => console.log(err));
 };
+
 
 exports.postSignup = (req, res, next) => {
   // const email = req.body.email;

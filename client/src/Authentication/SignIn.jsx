@@ -28,13 +28,15 @@ function SignIn(props) {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		const fetchData = async () => {
-			const response = await UserAPI.getAllData();
+		// const fetchData = async () => {
+		// 	const response = await UserAPI.getAllData();
 
-			setUser(response);
-		};
+		// 	console.log(response);
 
-		fetchData();
+		// 	setUser(response);
+		// };
+
+		// fetchData();
 	}, []);
 
 	const onChangeEmail = (e) => {
@@ -63,36 +65,64 @@ function SignIn(props) {
 				} else {
 					setEmailRegex(false);
 
-					const findUser = user.find((value) => {
-						return value.email === email;
-					});
+					// const findUser = user.find((value) => {
+					// 	return value.email === email;
+					// });
 
-					if (!findUser) {
-						setErrorEmail(true);
-						return;
-					} else {
-						setErrorEmail(false);
+					// if (!findUser) {
+					// 	setErrorEmail(true);
+					// 	return;
+					// } else {
+					// 	setErrorEmail(false);
 
-						if (findUser.password !== password) {
-							setErrorPassword(true);
-							return;
-						} else {
-							setErrorPassword(false);
+					// 	if (findUser.password !== password) {
+					// 		setErrorPassword(true);
+					// 		return;
+					// 	} else {
+					// 		setErrorPassword(false);
 
-							localStorage.setItem('id_user', findUser._id);
+					// 		localStorage.setItem('id_user', findUser._id);
 
-							localStorage.setItem('name_user', findUser.fullname);
+					// 		localStorage.setItem('name_user', findUser.fullname);
 
-							const action = addSession(localStorage.getItem('id_user'));
-							dispatch(action);
+					// 		const action = addSession(localStorage.getItem('id_user'));
+					// 		dispatch(action);
 
-							setCheckPush(true);
+					// 		setCheckPush(true);
+					// 	}
+
+					const fetchLogin =  () => {
+						const params = {
+							email: email,
+							password: password,
+						};
+
+						const query = '?' + queryString.stringify(params);
+
+						UserAPI.postSignIn(query).then(response => response.json())
+						.then(data => {
+						  if (data.message === 'Login succeeded') {
+							console.log(data.message);
+						  } else {
+							// Error occurred, handle the error message
+							console.log(data.message);
+						  }
+						})
+						.catch(error => {
+						  // Error occurred during the API call, try catch cũng dùng giống vậy
+						console.log(error.response.data);
+						console.log(error.response.status);
+						console.log(error.response.headers);
+						});	
+
 						}
+					
+					fetchLogin();
+
 					}
 				}
 			}
 		}
-	};
 
 	//Hàm này dùng để đưa hết tất cả carts vào API của user
 	useEffect(() => {

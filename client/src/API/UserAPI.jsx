@@ -15,6 +15,11 @@ const UserAPI = {
 		const url = `/users/signup${query}`;
 		return axiosClient.post(url);
 	},
+
+	postSignIn: (query) => {
+		const url = `/users/login${query}`;
+		return axiosClient.post(url);
+	},
 };
 
 export default UserAPI;
