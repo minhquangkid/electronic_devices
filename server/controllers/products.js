@@ -12,6 +12,18 @@ exports.getProducts = (req, res, next) => {
  
 };
 
+exports.getDetailProduct = (req, res, next) => {
+  const productId = req.params.id;
+  Product.findById(productId).then(item=>{
+    if(item){
+      return res.status(200).send(item);
+    } else {
+      return res.status(404);
+    }
+  })
+ 
+};
+
 
 // exports.postSignup = (req, res, next) => {
 //   // const email = req.body.email;
