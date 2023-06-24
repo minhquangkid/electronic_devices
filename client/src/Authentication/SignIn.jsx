@@ -99,20 +99,35 @@ function SignIn(props) {
 
 						const query = '?' + queryString.stringify(params);
 
-						UserAPI.postSignIn(query).then(response => response.json())
-						.then(data => {
-						  if (data.message === 'Login succeeded') {
-							console.log(data.message);
-						  } else {
-							// Error occurred, handle the error message
-							console.log(data.message);
-						  }
+						UserAPI.postSignIn(query).then(data => {
+						console.log(data);
+						
+						setErrorPassword(false);
+						setErrorEmail(false);
+
+						localStorage.setItem('id_user', data._id);
+
+						localStorage.setItem('name_user', data.fullname);
+
+						const action = addSession(localStorage.getItem('id_user'));
+						dispatch(action);
+
+						setCheckPush(true);
 						})
 						.catch(error => {
 						  // Error occurred during the API call, try catch cũng dùng giống vậy
 						console.log(error.response.data);
 						console.log(error.response.status);
 						console.log(error.response.headers);
+						// console.log(error);
+						if(error.response.data === 'Incorrect password!'){
+							setErrorPassword(true);
+						}else if(error.response.data === 'Incorrect email!'){
+							setErrorEmail(true);
+						} else {
+							alert(error.response.data);
+						}
+						return;
 						});	
 
 						}

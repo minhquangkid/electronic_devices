@@ -55,7 +55,7 @@ exports.postLogin = (req, res, next) => {
                 console.log(err);
                 return res.status(400).send({ message: 'Login failed' });
               }
-              res.status(200).send({ message: 'Login succeeded' });
+              res.status(200).send(user);
             });
           }
           res.status(400).send({ message: 'Incorrect password!' });
@@ -104,6 +104,17 @@ exports.postSignup = (req, res, next) => {
       console.log(err);
     });
 };
+
+exports.getUser = (req,res,next) => {
+  const userId = req.params.id ;
+  User.findById(userId).then(data=>{
+    if(data){
+      res.status(200).send(data);
+    } else {
+      res.status(404);
+    }
+  })
+}
 
 exports.postLogout = (req, res, next) => {
   req.session.destroy(err => {
