@@ -14,12 +14,13 @@ const MONGODB_URI = "mongodb+srv://minhquang:25031998@cluster0.0tlx60u.mongodb.n
 
 
 const User = require("./models/users");
-// const Product = require("./models/products");
+//const Product = require("./models/products");
 // const Order = require("./models/orders");
 // const Session = require("./models/sessions");
 
 
 const authRoutes = require('./routes/auth');
+const products = require('./routes/products');
 
 app.use(cors());
 
@@ -64,6 +65,7 @@ app.use((req, res, next) => {
 });
 
 app.use(authRoutes);
+app.use(products);
 
 
 // User.createCollection().then(function (collection) {
