@@ -101,7 +101,7 @@ function Shop(props) {
 
 				const newQuery = '?' + query;
 
-				response = await ProductAPI.getPagination(newQuery);
+				// response = await ProductAPI.getPagination(newQuery);
 				console.log(response);
 			}
 
@@ -131,11 +131,11 @@ function Shop(props) {
 
 			const newQuery = '?' + query;
 
-			const response = await ProductAPI.getPagination(newQuery);
-			console.log(response);
+			//const response = await ProductAPI.getPagination(newQuery);
+			// console.log(response);
 
-			setProducts(response);
-			setTemp(response);
+			// setProducts(response);
+			// setTemp(response);
 		};
 
 		fetchData();

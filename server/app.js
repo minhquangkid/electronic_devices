@@ -21,6 +21,7 @@ const User = require("./models/users");
 
 const authRoutes = require('./routes/auth');
 const products = require('./routes/products');
+const cartRoutes = require('./routes/cart');
 
 app.use(cors());
 
@@ -66,6 +67,7 @@ app.use((req, res, next) => {
 
 app.use(authRoutes);
 app.use(products);
+app.use(cartRoutes);
 
 
 // User.createCollection().then(function (collection) {

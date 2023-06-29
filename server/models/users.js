@@ -35,17 +35,17 @@ const userSchema = new Schema({
 
 userSchema.methods.addToCart = function(product) {
   const cartProductIndex = this.cart.items.findIndex(cp => {
-    return cp.productId.toString() === product._id.toString();
+    return cp.productId.toString() === product.idProduct.toString();
   });
-  let newQuantity = 1;
+  let newQuantity = product.count;
   const updatedCartItems = [...this.cart.items];
 
   if (cartProductIndex >= 0) {
-    newQuantity = this.cart.items[cartProductIndex].quantity + 1;
+    newQuantity = Number(this.cart.items[cartProductIndex].quantity) + Number(product.count);
     updatedCartItems[cartProductIndex].quantity = newQuantity;
   } else {
     updatedCartItems.push({
-      productId: product._id,
+      productId: product.idProduct,
       quantity: newQuantity
     });
   }
