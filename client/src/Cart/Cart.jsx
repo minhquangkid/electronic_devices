@@ -9,9 +9,9 @@ import queryString from 'query-string';
 import convertMoney from '../convertMoney';
 
 function Cart(props) {
-	//id_user được lấy từ redux
-	const id_user = useSelector((state) => state.Cart.id_user);
-
+	//userId được lấy từ redux
+	//const userId = useSelector((state) => state.Cart.userId);
+	const [userId, setUserId] = useState('');
 	//listCart được lấy từ redux
 	const listCart = useSelector((state) => state.Cart.listCart);
 
@@ -50,7 +50,9 @@ function Cart(props) {
 
 		const sum_total = carts.map((value) => {
 			return (sub_total +=
-				parseInt(value.priceProduct) * parseInt(value.count));
+				parseInt(value.productId.price) * parseInt(value.
+					quantity
+					));
 		});
 
 		setTotal(sub_total);
@@ -67,13 +69,14 @@ function Cart(props) {
 
 				const query = '?' + queryString.stringify(params);
 
-				console.log(query);
+				//console.log(query);
 
 				const response = await CartAPI.getCarts(query);
+				console.log(response);
+				setCart(response.cart.items);
+				setUserId(response._id);
 
-				setCart(response);
-
-				getTotal(response);
+				getTotal(response.cart.items);
 			}
 		};
 
@@ -242,6 +245,7 @@ function Cart(props) {
 							listCart={cart}
 							onDeleteCart={onDeleteCart}
 							onUpdateCount={onUpdateCount}
+							userId={userId}
 						/>
 
 						<div className='bg-light px-4 py-3'>

@@ -28,12 +28,12 @@ function App() {
 					<Route path='/signin' component={SignIn} />{' '}
 					<Route path='/signup' component={SignUp} />{' '}
 					<Route path='/checkout' component={Checkout} />{' '}
-					<Route path='/history' component={History} />{' '}
+					{/* <Route path='/history' component={History} />{' '} */}
 					<Route path='/shop' component={Shop} />
 				</Switch>{' '}
 			</BrowserRouter>
 
-			<Chat />
+			{/* <Chat /> */}
 
 			<Footer />
 		</div>
