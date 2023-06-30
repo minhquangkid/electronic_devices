@@ -3,35 +3,46 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const orderSchema = new Schema({
-  username: { type: String, required: true }, // bắt buộc vì trong đăng nhập có
-  password: {
-    type: String,
-    required: true, // bắt buộc vì trong đăng nhập có
+  userId:{
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
   },
   fullName: {
     type: String,
-    required: false,
-  },
-  phoneNumber: {
-    type: Number,
-    required: false,
+    required: true,
   },
   email: {
     type: String,
-    required: false,
-  },
-  idCard: {
-    type: String,
-    required: false,
-  },
-  isAdmin: {
-    type: Boolean,
-    required: false,
-  },
-  isLogIn: {
-    type: Boolean,
     required: true,
-  }, 
+  },
+  phoneNumber: {
+    type: Number,
+    required: true,
+  },
+  address: {
+    type: String,
+    required: true,
+  },
+cart : [
+  {
+    productId: {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+      required: true
+    },
+    quantity: { type: Number, required: true }
+  }
+],
+totalPrice : {
+  type: Number,
+  required : true
+},
+createAt: { type: Date, required: true },
+status: {
+  type: String,
+  required: true,
+},
 
 });
 module.exports = mongoose.model("Order", orderSchema); 

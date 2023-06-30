@@ -73,8 +73,9 @@ function Cart(props) {
 
 				const response = await CartAPI.getCarts(query);
 				console.log(response);
-				setCart(response.cart.items);
 				setUserId(response._id);
+				
+				setCart(response.cart.items);
 
 				getTotal(response.cart.items);
 			}

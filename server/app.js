@@ -22,6 +22,7 @@ const User = require("./models/users");
 const authRoutes = require('./routes/auth');
 const products = require('./routes/products');
 const cartRoutes = require('./routes/cart');
+const emailRoutes = require('./routes/email');
 
 app.use(cors());
 
@@ -68,11 +69,12 @@ app.use((req, res, next) => {
 app.use(authRoutes);
 app.use(products);
 app.use(cartRoutes);
+app.use(emailRoutes);
 
 
 // User.createCollection().then(function (collection) {
 //   console.log('Collection is created!');
-// }); // tự động tại collection trên mongodb dựa theo model bên nodejs
+// }); // tự động tạo collection trên mongodb dựa theo model bên nodejs
 // Product.createCollection().then(function (collection) {
 //   console.log('Collection is created!');
 // });

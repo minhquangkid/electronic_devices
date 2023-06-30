@@ -5,8 +5,8 @@ import CheckoutAPI from '../API/CheckoutAPI';
 import convertMoney from '../convertMoney';
 import './Checkout.css';
 
-import io from 'socket.io-client';
-const socket = io('http://localhost:5000');
+// import io from 'socket.io-client';
+// const socket = io('http://localhost:5000');
 
 function Checkout(props) {
 	const [carts, setCarts] = useState([]);
@@ -45,11 +45,11 @@ function Checkout(props) {
 
 				console.log(response);
 
-				setCarts(response);
+				setCarts(response.cart.items);
 
-				getTotal(response);
+				getTotal(response.cart.items);
 
-				if (response.length === 0) {
+				if (response.cart.items.length === 0) {
 					window.location.replace('/cart');
 				}
 			};
@@ -64,7 +64,9 @@ function Checkout(props) {
 
 		const sum_total = carts.map((value) => {
 			return (sub_total +=
-				parseInt(value.priceProduct) * parseInt(value.count));
+				parseInt(value.productId.price) * parseInt(value.
+					quantity
+					));
 		});
 
 		setTotal(sub_total);
@@ -133,11 +135,12 @@ function Checkout(props) {
 		if (load) {
 			const sendMail = async () => {
 				const params = {
-					to: email,
+					email: email,
 					fullname: fullname,
 					phone: phone,
 					address: address,
 					idUser: localStorage.getItem('id_user'),
+					total : total
 				};
 
 				const query = '?' + queryString.stringify(params);
@@ -152,7 +155,7 @@ function Checkout(props) {
 			const data = localStorage.getItem('id_user');
 
 			// Gửi socket lên server
-			socket.emit('send_order', data);
+			// socket.emit('send_order', data);
 
 			//Dùng setTimeout delay 3s
 			//Sau 4s nó sẽ thực hiện
@@ -333,14 +336,14 @@ function Checkout(props) {
 													<div key={value._id}>
 														<li className='d-flex align-items-center justify-content-between'>
 															<strong className='small font-weight-bold'>
-																{value.nameProduct}
+																{value.productId.name}
 															</strong>
 															<br></br>
 															<span className='text-muted small'>
 																{convertMoney(
-																	value.priceProduct
+																	value.productId.price
 																)}{' '}
-																VND x {value.count}
+																VND x {value.quantity}
 															</span>
 														</li>
 														<li className='border-bottom my-2'></li>
