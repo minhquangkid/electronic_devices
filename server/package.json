@@ -27,6 +27,8 @@
     "mocha": "^10.2.0",
     "mongodb": "^4.13.0",
     "mongoose": "^5.2.17",
+    "nodemailer": "^6.9.3",
+    "nodemailer-sendgrid-transport": "^0.2.0",
     "supertest": "^6.3.3"
   },
   "directories": {
