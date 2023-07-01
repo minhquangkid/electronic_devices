@@ -8,4 +8,6 @@ router.get("/histories", cartController.getHistoryByUserId);
 
 router.get("/histories/:id", cartController.getHistoryDetail);
 
+router.get("/histories-all", cartController.getHistoryAll);
+
 module.exports = router;

@@ -1,64 +1,73 @@
-
-
-const Product = require('../models/products');
-
-
+const Product = require("../models/products");
 
 exports.getProducts = (req, res, next) => {
-
-  Product.find().then(lstProduct=>{
+  Product.find().then((lstProduct) => {
     return res.status(200).send(lstProduct);
-  })
- 
+  });
 };
 
 exports.getDetailProduct = (req, res, next) => {
   const productId = req.params.id;
-  Product.findById(productId).then(item=>{
-    if(item){
+  Product.findById(productId).then((item) => {
+    if (item) {
       return res.status(200).send(item);
     } else {
       return res.status(404);
     }
-  })
- 
+  });
 };
 
+exports.getPaging = (req, res, next) => {
+  const page = parseInt(req.query.page) || 1;
+  const count = parseInt(req.query.count) || 10;
+  const search = req.query.search || "";
+  const category = req.query.category || "";
 
-// exports.postSignup = (req, res, next) => {
-//   // const email = req.body.email;
-//   // const password = req.body.password;
-//   // const confirmPassword = req.body.confirmPassword;
-//   const email = req.query.email;
-//   const password = req.query.password;
-//   const fullname = req.query.fullname;
-//   const phone =req.query.phone;
+  // const items = [
+  //   { id: 1, name: "Item 1", category: "Category A" },
+  //   { id: 2, name: "Item 2", category: "Category B" },
+  //   { id: 3, name: "Item 3", category: "Category A" },
+  //   // ... more items
+  // ];
 
-//   User.findOne({ email: email })
-//     .then(userDoc => {
-//       if (userDoc) {
-//         req.flash('error', 'E-Mail exists already, please pick a different one.');
-//         return res.status(400).send({message : 'E-Mail exists already, please pick a different one.'})
-//       }
-//       return bcrypt
-//         .hash(password, 12)
-//         .then(hashedPassword => {
-//           const user = new User({
-//             email: email,
-//             password: hashedPassword,
-//             fullname: fullname,
-//             phone: phone,
-//             cart: { items: [] }
-//           });
-//           return user.save();
-//         })
-//         .then(result => {
-//           res.status(200).send({message : "Create account successfully"})
-//         });
-//     })
-//     .catch(err => {
-//       console.log(err);
-//     });
-// };
+  // // Filtering based on search and category
+  // const filteredItems = items.filter((item) => {
+  //   return (
+  //     item.name.toLowerCase().includes(search.toLowerCase()) &&
+  //     (category === "" || item.category === category)
+  //   );
+  // });
 
+  Product.find()
+    .then((data) => {
+      if (category !== "all") {
+        data = data.filter((e) => e.category === category);
+      }
 
+      if (search !== "") {
+        data = data.filter((e) =>
+          e.name.toLowerCase().includes(search.toLowerCase())
+        );
+      }
+
+      // Paginating the results
+      const startIndex = (page - 1) * count;
+      const endIndex = startIndex + count;
+      const paginatedItems = data.slice(startIndex, endIndex);
+
+      res.status(200).send(paginatedItems);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(400);
+    });
+
+  // Sending the paginated results back to the frontend
+  // res.json({
+  //   page,
+  //   count,
+  //   totalItems: filteredItems.length,
+  //   totalPages: Math.ceil(filteredItems.length / count),
+  //   items: paginatedItems,
+  // });
+};
