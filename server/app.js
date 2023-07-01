@@ -2,27 +2,27 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 const mongoose = require("mongoose");
-const path = require('path');
+const path = require("path");
 
-const bodyParser = require('body-parser');
-const session = require('express-session');
-const MongoDBStore = require('connect-mongodb-session')(session);
-const csrf = require('csurf');
-const flash = require('connect-flash');
+const bodyParser = require("body-parser");
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
+const csrf = require("csurf");
+const flash = require("connect-flash");
 
-const MONGODB_URI = "mongodb+srv://minhquang:25031998@cluster0.0tlx60u.mongodb.net/asm3?retryWrites=true";
-
+const MONGODB_URI =
+  "mongodb+srv://minhquang:25031998@cluster0.0tlx60u.mongodb.net/asm3?retryWrites=true";
 
 const User = require("./models/users");
 //const Product = require("./models/products");
 // const Order = require("./models/orders");
 // const Session = require("./models/sessions");
 
-
-const authRoutes = require('./routes/auth');
-const products = require('./routes/products');
-const cartRoutes = require('./routes/cart');
-const emailRoutes = require('./routes/email');
+const authRoutes = require("./routes/auth");
+const products = require("./routes/products");
+const cartRoutes = require("./routes/cart");
+const emailRoutes = require("./routes/email");
+const historyRoutes = require("./routes/histories");
 
 app.use(cors());
 
@@ -31,18 +31,18 @@ app.use(express.urlencoded({ extended: false })); // cái này dùng với tag <
 
 const store = new MongoDBStore({
   uri: MONGODB_URI,
-  collection: 'sessions'
+  collection: "sessions",
 });
 //const csrfProtection = csrf();
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 app.use(
   session({
-    secret: 'my secret',
+    secret: "my secret",
     resave: false,
     saveUninitialized: false,
-    store: store
+    store: store,
   })
 );
 //app.use(csrfProtection);
@@ -53,16 +53,16 @@ app.use((req, res, next) => {
     return next();
   }
   User.findById(req.session.user._id)
-    .then(user => {
+    .then((user) => {
       req.user = user;
       next();
     })
-    .catch(err => console.log(err));
+    .catch((err) => console.log(err));
 });
 
 app.use((req, res, next) => {
   res.locals.isAuthenticated = req.session.isLoggedIn;
- // res.locals.csrfToken = req.csrfToken();
+  // res.locals.csrfToken = req.csrfToken();
   next();
 });
 
@@ -70,7 +70,7 @@ app.use(authRoutes);
 app.use(products);
 app.use(cartRoutes);
 app.use(emailRoutes);
-
+app.use(historyRoutes);
 
 // User.createCollection().then(function (collection) {
 //   console.log('Collection is created!');
