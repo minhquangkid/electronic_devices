@@ -23,21 +23,6 @@ exports.getPaging = (req, res, next) => {
   const search = req.query.search || "";
   const category = req.query.category || "";
 
-  // const items = [
-  //   { id: 1, name: "Item 1", category: "Category A" },
-  //   { id: 2, name: "Item 2", category: "Category B" },
-  //   { id: 3, name: "Item 3", category: "Category A" },
-  //   // ... more items
-  // ];
-
-  // // Filtering based on search and category
-  // const filteredItems = items.filter((item) => {
-  //   return (
-  //     item.name.toLowerCase().includes(search.toLowerCase()) &&
-  //     (category === "" || item.category === category)
-  //   );
-  // });
-
   Product.find()
     .then((data) => {
       if (category !== "all") {
