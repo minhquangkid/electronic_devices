@@ -1,6 +1,10 @@
 import React from "react";
 
 function Menu(props) {
+  function logOutHandle() {
+    localStorage.removeItem("userData");
+    window.location.replace("/");
+  }
   return (
     <aside className="left-sidebar" data-sidebarbg="skin6">
       <div className="scroll-sidebar" data-sidebarbg="skin6">
@@ -8,7 +12,7 @@ function Menu(props) {
           <ul id="sidebarnav">
             <li className="sidebar-item">
               {" "}
-              <a className="sidebar-link sidebar-link" href="/">
+              <a className="sidebar-link sidebar-link" href="/home">
                 <i data-feather="home" className="feather-icon"></i>
                 <span className="hide-menu">Dashboard</span>
               </a>
@@ -25,13 +29,20 @@ function Menu(props) {
                 <span className="hide-menu">Products</span>
               </a>
             </li>
-            <li className="sidebar-item">
+            <li className="sidebar-item" onClick={logOutHandle}>
+              {" "}
+              <a className="sidebar-link sidebar-link">
+                <i data-feather="settings" className="feather-icon"></i>
+                <span className="hide-menu">Log out</span>
+              </a>
+            </li>
+            {/* <li className="sidebar-item">
               {" "}
               <a className="sidebar-link sidebar-link" href="/chat">
                 <i data-feather="message-square" className="feather-icon"></i>
                 <span className="hide-menu">Chat</span>
               </a>
-            </li>
+            </li> */}
             {/* <li className='sidebar-item'>
 							{' '}
 							<a

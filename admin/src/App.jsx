@@ -9,8 +9,25 @@ import Users from "./Users/Users";
 import Login from "./Login/Login";
 import NewProduct from "./New/NewProduct";
 import { AuthContextProvider } from "./Context/AuthContext";
+import React, { useState, useEffect, useContext } from "react";
 
 function App() {
+  const [showMenu, setShowMenu] = useState(false);
+
+  useEffect(() => {
+    let userData = JSON.parse(localStorage.getItem("userData"));
+
+    if (userData) {
+      setShowMenu(true);
+    } else {
+      setShowMenu(false);
+    }
+  }, []);
+
+  const isLogin = () => {
+    setShowMenu(true);
+  };
+
   return (
     <div className="App">
       <AuthContextProvider>
@@ -27,15 +44,18 @@ function App() {
           >
             <Header />
 
-            <Menu />
+            {showMenu && <Menu />}
 
             <Switch>
-              <Route exact path="/" component={Home} />
+              <Route exact path="/home" component={Home} />
               <Route path="/chat" component={Chat} />
               <Route path="/users" component={Users} />
               <Route path="/products" component={Products} />
               <Route path="/history" component={History} />
-              <Route path="/login" component={Login} />
+              <Route
+                path="/"
+                render={(props) => <Login {...props} isLogin={isLogin} />}
+              />
               <Route path="/new" component={NewProduct} />
             </Switch>
           </div>

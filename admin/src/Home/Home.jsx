@@ -37,7 +37,7 @@ function Home(props) {
                         <th>Total</th>
                         <th>Delivery</th>
                         <th>Status</th>
-                        {/* <th>Detail</th> */}
+                        <th>Detail</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -59,17 +59,17 @@ function Home(props) {
                                 ? "Đã Thanh Toán"
                                 : "Chưa Thanh Toán"}
                             </td>
-                            {/* <td>
-                            <a
-                              style={{
-                                cursor: "pointer",
-                                color: "white",
-                              }}
-                              className="btn btn-success"
-                            >
-                              View
-                            </a>
-                          </td> */}
+                            <td>
+                              <a
+                                style={{
+                                  cursor: "pointer",
+                                  color: "white",
+                                }}
+                                className="btn btn-success"
+                              >
+                                View
+                              </a>
+                            </td>
                           </tr>
                         ))}
                     </tbody>
