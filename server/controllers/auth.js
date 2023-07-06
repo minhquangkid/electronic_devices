@@ -166,8 +166,8 @@ exports.postLogout = (req, res, next) => {
   });
 };
 
-exports.getAllUsers = (req, res, next) => {
-  User.find().then((data) => {
+exports.getAllClients = (req, res, next) => {
+  User.find({ role: "Customer" }).then((data) => {
     res.status(200).send(data);
   });
 };

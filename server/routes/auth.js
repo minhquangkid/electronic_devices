@@ -12,7 +12,7 @@ router.post("/users/signup", authController.postSignup);
 
 router.get("/users/:id", authController.getUser);
 
-router.get("/users", authController.getAllUsers);
+router.get("/users-clients", authController.getAllClients);
 
 router.post("/logout", authController.postLogout);
 

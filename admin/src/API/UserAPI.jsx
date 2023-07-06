@@ -1,6 +1,10 @@
 import axiosClient from "./axiosClient";
 
 const UserAPI = {
+  getAllClients: () => {
+    const url = "/users-clients";
+    return axiosClient.get(url);
+  },
   getAllData: () => {
     const url = "/users";
     return axiosClient.get(url);
