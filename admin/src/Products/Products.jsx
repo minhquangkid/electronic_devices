@@ -5,6 +5,7 @@ import Pagination from "./Component/Pagination";
 
 function Products(props) {
   const [products, setProducts] = useState([]);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   const [pagination, setPagination] = useState({
     page: "1",
@@ -60,6 +61,12 @@ function Products(props) {
     };
 
     fetchAllData();
+
+    let getCurrentUser = JSON.parse(localStorage.getItem("userData"));
+    console.log(getCurrentUser);
+    if (getCurrentUser.role === "Admin") {
+      setIsAdmin(true);
+    }
   }, [pagination]);
 
   //Gọi hàm Pagination
@@ -85,7 +92,7 @@ function Products(props) {
     fetchData();
   }, [pagination]);
 
-  return (
+  return isAdmin ? (
     <div style={{ marginLeft: "250px" }}>
       <div className="page-breadcrumb">
         <div className="row">
@@ -193,6 +200,16 @@ function Products(props) {
         </div>
       </div>
     </div>
+  ) : (
+    <React.Fragment>
+      <div style={{ marginLeft: "250px", marginTop: "100px" }}>
+        <div className="page-breadcrumb">
+          <div className="row">
+            <h1>Only admin is allowed for accessing</h1>
+          </div>
+        </div>
+      </div>
+    </React.Fragment>
   );
 }
 

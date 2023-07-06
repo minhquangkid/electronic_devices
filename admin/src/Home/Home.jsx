@@ -10,8 +10,14 @@ let total = 0;
 function Home(props) {
   const [history, setHistory] = useState([]);
   const [Clients, setClients] = useState(0);
+  const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
+    let getCurrentUser = JSON.parse(localStorage.getItem("userData"));
+    console.log(getCurrentUser);
+    if (getCurrentUser.role === "Admin") {
+      setIsAdmin(true);
+    }
     async function fetchHistory() {
       const response = await HistoryAPI.getAll();
 
@@ -31,7 +37,7 @@ function Home(props) {
     fetchClients();
   }, []);
 
-  return (
+  return isAdmin ? (
     <div style={{ marginLeft: "250px", marginTop: "100px" }}>
       <div className="page-breadcrumb">
         <div className="row">
@@ -176,6 +182,16 @@ function Home(props) {
         </div>
       </div>
     </div>
+  ) : (
+    <React.Fragment>
+      <div style={{ marginLeft: "250px", marginTop: "100px" }}>
+        <div className="page-breadcrumb">
+          <div className="row">
+            <h1>Only admin is allowed for accessing</h1>
+          </div>
+        </div>
+      </div>
+    </React.Fragment>
   );
 }
 
