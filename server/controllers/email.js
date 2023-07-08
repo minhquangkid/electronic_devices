@@ -53,76 +53,78 @@ exports.postEmail = (req, res, next) => {
       order
         .save()
         .then(() => {
-          //user.clearCart();
           res.status(200);
 
-          transporter.sendMail(
-            {
-              to: email,
-              from: "minhquangsendemail@gmail.com",
-              subject: "Order succeeded!",
-              html: "<h1>You successfully ordered !</h1>",
-            },
-            function (err, inf) {
-              if (err) {
-                console.log(err);
-              } else {
-                console.log("Email sent : " + inf.response);
-              }
-            }
-          );
+          User.findById(idUser)
+            .populate("cart.items.productId")
+            .exec((err, fullInf) => {
+              var content = "";
 
-          // transporter.sendMail({
-          //   to: "quangnguyenminh.it@gmail.com",
-          //   from: "minhquangsendemail@gmail.com",
-          //   subject: "Order succeeded!",
-          //   html: "<h1>You successfully ordered !</h1>",
-          // });
+              content += `
+            <h1>Xin chào ${fullName}</h1>
+            <p>Phone : ${phone}</p>
+            <div style="text-align: center;">
+            <table style="border-collapse: collapse; width: 100%;">
+              <tr>
+                <th style="border: 1px solid black; padding: 8px;">Tên Sản Phẩm</th>
+                <th style="border: 1px solid black; padding: 8px;">Hình Ảnh</th>
+                <th style="border: 1px solid black; padding: 8px;">Giá</th>
+                <th style="border: 1px solid black; padding: 8px;">Số Lượng</th>
+                <th style="border: 1px solid black; padding: 8px;">Thành Tiền</th>
+              </tr>`;
 
-          //////////////////////////////////////////////////////////////////////
-          //   var transporter = nodemailer.createTransport({
-          //     // config mail server
-          //     host: "smtp.gmail.com",
-          //     port: 465,
-          //     secure: true,
-          //     auth: {
-          //       user: "minhquangsendemail@gmail.com", //Tài khoản gmail vừa tạo
-          //       pass: "Minhquang@98", //Mật khẩu tài khoản gmail vừa tạo
-          //     },
-          //     tls: {
-          //       // do not fail on invalid certs
-          //       rejectUnauthorized: false,
-          //     },
-          //   });
+              fullInf.cart.items.forEach((e) => {
+                content += `
+              <tr>
+                <td style="border: 1px solid black; padding: 8px;">${
+                  e.productId.name
+                }</td>
+                <td style="border: 1px solid black; padding: 8px;">
+                  <img
+                    src=${e.productId.img1}
+                    width="50px"
+                    height="100px"
+                    alt=${e.productId.name}
+                  ></img>
+                </td>
+                <td style="border: 1px solid black; padding: 8px;">${
+                  e.productId.price
+                }</td>
+                <td style="border: 1px solid black; padding: 8px;">${
+                  e.quantity
+                }</td>
+                <td style="border: 1px solid black; padding: 8px;">${
+                  e.productId.price * e.quantity
+                } VNĐ</td>
+              </tr>`;
+              });
 
-          //   var content = "";
-          //   content += `
-          //     <div style="padding: 10px; background-color: #003375">
-          //         <div style="padding: 10px; background-color: white;">
-          //             <h4 style="color: #0085ff">Gửi mail với nodemailer và express</h4>
-          //             <span style="color: black">Đây là mail test</span>
-          //         </div>
-          //     </div>
-          // `;
-          //   var mainOptions = {
-          //     // thiết lập đối tượng, nội dung gửi mail
-          //     from: "NQH-Test nodemailer",
-          //     to: email,
-          //     subject: "Test Nodemailer",
-          //     text: "Your text is here", //Thường thi mình không dùng cái này thay vào đó mình sử dụng html để dễ edit hơn
-          //     html: content, //Nội dung html mình đã tạo trên kia :))
-          //   };
-          //   transporter.sendMail(mainOptions, function (err, info) {
-          //     if (err) {
-          //       console.log(err);
-          //       req.flash("mess", "Lỗi gửi mail: " + err); //Gửi thông báo đến người dùng
-          //       res.redirect("/");
-          //     } else {
-          //       console.log("Message sent: " + info.response);
-          //       req.flash("mess", "Một email đã được gửi đến tài khoản của bạn"); //Gửi thông báo đến người dùng
-          //       res.redirect("/");
-          //     }
-          //   });
+              content += `
+            </table>
+            </div>
+            <h1>Tổng Thanh Toán</h1>
+            <h1>${total} VNĐ</h1>
+            <br>
+            <h2>Cảm ơn bạn!</h2>`;
+
+              transporter.sendMail(
+                {
+                  to: email,
+                  from: "minhquangsendemail@gmail.com",
+                  subject: "Order succeeded!",
+                  html: content,
+                },
+                function (err, inf) {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    console.log("Email sent: " + inf.response);
+                  }
+                }
+              );
+            });
+
+          user.clearCart();
         })
         .catch((err) => {
           console.log(err);
