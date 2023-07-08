@@ -206,18 +206,18 @@ function Detail(props) {
         const response = await CartAPI.postAddToCart(query);
 
         console.log(response);
+        alertify.set("notifier", "position", "bottom-left");
+        alertify.success("Bạn Đã Thêm Hàng Thành Công!");
       };
 
       fetchPost();
     } else {
-      const action = addCart(data);
-      dispatch(action);
+      // const action = addCart(data);
+      // dispatch(action);
+      alert("You are not logged in");
     }
 
-    alertify.set("notifier", "position", "bottom-left");
-    alertify.success("Bạn Đã Thêm Hàng Thành Công!");
-
-    history.push("/cart");
+    // history.push("/cart");
   };
 
   return (

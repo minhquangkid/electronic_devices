@@ -9,6 +9,7 @@ const session = require("express-session");
 const MongoDBStore = require("connect-mongodb-session")(session);
 const csrf = require("csurf");
 const flash = require("connect-flash");
+const cookieParser = require("cookie-parser");
 
 const MONGODB_URI =
   "mongodb+srv://minhquang:25031998@cluster0.0tlx60u.mongodb.net/asm3?retryWrites=true";
@@ -24,7 +25,13 @@ const cartRoutes = require("./routes/cart");
 const emailRoutes = require("./routes/email");
 const historyRoutes = require("./routes/histories");
 
-app.use(cors());
+app.use(
+  "*",
+  cors({
+    origin: true,
+    credentials: true,
+  })
+);
 
 app.use(express.json()); // cái này dùng với fetch có method là POST
 app.use(express.urlencoded({ extended: false })); // cái này dùng với tag <form> có method là POST
@@ -46,7 +53,9 @@ app.use(
   })
 );
 //app.use(csrfProtection);
+
 app.use(flash());
+app.use(cookieParser());
 
 app.use((req, res, next) => {
   if (!req.session.user) {

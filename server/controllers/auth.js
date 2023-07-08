@@ -55,6 +55,12 @@ exports.postLogin = (req, res, next) => {
                 console.log(err);
                 return res.status(400).send({ message: "Login failed" });
               }
+              res.cookie("userLoggedIn", user.email, {
+                maxAge: 86400000, // Cookie expiration time (in milliseconds)
+                httpOnly: true, // Cookie accessible only by the server
+                secure: true, // Cookie only sent over HTTPS if enabled
+                sameSite: "strict", // Restrict cookie to same-site requests
+              });
               res.status(200).send(user);
             });
           }
@@ -159,7 +165,8 @@ exports.getUser = (req, res, next) => {
   });
 };
 
-exports.postLogout = (req, res, next) => {
+exports.getLogout = (req, res, next) => {
+  res.clearCookie("userLoggedIn");
   req.session.destroy((err) => {
     console.log(err);
     res.status(200).send({ message: "logout succeeded" });
