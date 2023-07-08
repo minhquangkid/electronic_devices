@@ -3,15 +3,23 @@ const Order = require("../models/orders");
 const nodemailer = require("nodemailer");
 const sendgridTransport = require("nodemailer-sendgrid-transport");
 
-const transporter = nodemailer.createTransport(
-  sendgridTransport({
-    auth: {
-      // api_user: "node-email",
-      api_key:
-        "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",
-    },
-  })
-);
+// const transporter = nodemailer.createTransport(
+//   sendgridTransport({
+//     auth: {
+//       // api_user: "node-email",
+//       api_key:
+//         "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",
+//     },
+//   })
+// );
+
+const transporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "minhquangsendemail@gmail.com",
+    pass: "ejqneshbbjjonjan",
+  },
+});
 
 exports.postEmail = (req, res, next) => {
   const idUser = req.query.idUser;
@@ -45,8 +53,25 @@ exports.postEmail = (req, res, next) => {
       order
         .save()
         .then(() => {
-          user.clearCart();
+          //user.clearCart();
           res.status(200);
+
+          transporter.sendMail(
+            {
+              to: email,
+              from: "minhquangsendemail@gmail.com",
+              subject: "Order succeeded!",
+              html: "<h1>You successfully ordered !</h1>",
+            },
+            function (err, inf) {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log("Email sent : " + inf.response);
+              }
+            }
+          );
+
           // transporter.sendMail({
           //   to: "quangnguyenminh.it@gmail.com",
           //   from: "minhquangsendemail@gmail.com",
