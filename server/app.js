@@ -11,8 +11,10 @@ const csrf = require("csurf");
 const flash = require("connect-flash");
 const cookieParser = require("cookie-parser");
 
-const MONGODB_URI =
-  "mongodb+srv://minhquang:25031998@cluster0.0tlx60u.mongodb.net/asm3?retryWrites=true";
+// const MONGODB_URI =
+//   "mongodb+srv://minhquang:25031998@cluster0.0tlx60u.mongodb.net/asm3?retryWrites=true";
+
+const MONGODB_URI = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_PASSWORD}@cluster0-ntrwp.mongodb.net/${process.env.MONGO_DEFAULT_DATABASE}?retryWrites=true`;
 
 const User = require("./models/users");
 //const Product = require("./models/products");
@@ -101,7 +103,7 @@ mongoose
   )
   .then((result) => {
     console.log("Mongodb connect");
-    app.listen(5000);
+    app.listen(process.env.PORT || 5000);
   })
   .catch((err) => {
     console.log(err);
