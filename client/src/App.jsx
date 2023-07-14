@@ -19,7 +19,7 @@ import Chat from "./Share/Chat/Chat";
 function App() {
   return (
     <div className="App">
-      <BrowserRouter basename={"https://electronic-client.onrender.com"}>
+      <BrowserRouter>
         <Header />
         <Switch>
           <Route exact path="/" component={Home} />{" "}
