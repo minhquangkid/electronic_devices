@@ -1,17 +1,6 @@
 const User = require("../models/users");
 const Order = require("../models/orders");
 const nodemailer = require("nodemailer");
-const sendgridTransport = require("nodemailer-sendgrid-transport");
-
-// const transporter = nodemailer.createTransport(
-//   sendgridTransport({
-//     auth: {
-//       // api_user: "node-email",
-//       api_key:
-//         "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",
-//     },
-//   })
-// );
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
