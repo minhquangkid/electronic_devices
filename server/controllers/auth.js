@@ -56,10 +56,10 @@ exports.postLogin = (req, res, next) => {
                 return res.status(400).send({ message: "Login failed" });
               }
               res.cookie("userLoggedIn", user.email, {
-                maxAge: 86400000, // Cookie expiration time (in milliseconds)
-                httpOnly: true, // Cookie accessible only by the server
-                secure: true, // Cookie only sent over HTTPS if enabled
-                sameSite: "strict", // Restrict cookie to same-site requests
+                // maxAge: 86400000, // Cookie expiration time (in milliseconds)
+                // httpOnly: true, // Cookie accessible only by the server
+                // secure: true, // Cookie only sent over HTTPS if enabled
+                // sameSite: "strict", // Restrict cookie to same-site requests
               });
               res.status(200).send(user);
             });
