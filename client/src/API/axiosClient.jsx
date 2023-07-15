@@ -5,7 +5,8 @@ import queryString from "query-string";
 // Please have a look at here `https://github.com/axios/axios#requestconfig` for the full list of configs
 const axiosClient = axios.create({
   // baseURL: "http://localhost:5000",
-  baseURL: "https://electronic-api.onrender.com",
+  // baseURL: "https://electronic-api.onrender.com",
+  baseURL: "https://electronic-api.quangapi.com",
   headers: {
     "content-type": "application/json",
     // 'CSRF-Token':
