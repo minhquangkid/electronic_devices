@@ -4,9 +4,9 @@ exports.addCart = (req, res, next) => {
   const idUser = req.query.idUser;
   const idProduct = req.query.idProduct;
   const count = req.query.count;
-  if (req.cookies.userLoggedIn == null) {
-    return res.status(403).send({ message: "User doesn't log in" });
-  }
+  // if (req.cookies.userLoggedIn == null) {
+  //   return res.status(403).send({ message: "User doesn't log in" });
+  // }
   console.log(req.cookies.userLoggedIn);
   User.findById(idUser) // Assuming you have the userId available in the request
     .then((user) => {
