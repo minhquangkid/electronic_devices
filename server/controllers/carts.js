@@ -35,9 +35,9 @@ exports.addCart = (req, res, next) => {
 };
 
 exports.getCart = (req, res, next) => {
-  if (req.cookies.userLoggedIn == null) {
-    return res.status(403).send({ message: "User doesn't log in" });
-  }
+  // if (req.cookies.userLoggedIn == null) {
+  //   return res.status(403).send({ message: "User doesn't log in" });
+  // }
   const idUser = req.query.idUser;
   User.findById(idUser)
     .populate("cart.items.productId")
@@ -55,19 +55,19 @@ exports.getCart = (req, res, next) => {
 };
 
 exports.updateCart = (req, res, next) => {
-  if (req.cookies.userLoggedIn == null) {
-    return res.status(403).send({ message: "User doesn't log in" });
-  }
+  // if (req.cookies.userLoggedIn == null) {
+  //   return res.status(403).send({ message: "User doesn't log in" });
+  // }
   const idUser = req.query.idUser;
   const idProduct = req.query.idProduct;
   const count = req.query.count;
 
   User.findById(idUser)
     .then((user) => {
-      if (!user) {
-        // Handle the case where the user doesn't exist
-        return res.status(404).json({ message: "User not found" });
-      }
+      // if (!user) {
+      //   // Handle the case where the user doesn't exist
+      //   return res.status(404).json({ message: "User not found" });
+      // }
 
       user
         .updateCartByProductId(idProduct, count)
@@ -85,9 +85,9 @@ exports.updateCart = (req, res, next) => {
 };
 
 exports.deleteItemCart = (req, res, next) => {
-  if (req.cookies.userLoggedIn == null) {
-    return res.status(403).send({ message: "User doesn't log in" });
-  }
+  // if (req.cookies.userLoggedIn == null) {
+  //   return res.status(403).send({ message: "User doesn't log in" });
+  // }
   const idUser = req.query.idUser;
   const idProduct = req.query.idProduct;
 

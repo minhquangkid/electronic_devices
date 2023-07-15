@@ -56,7 +56,7 @@ exports.postLogin = (req, res, next) => {
                 return res.status(400).send({ message: "Login failed" });
               }
               res.cookie("userLoggedIn", user.email, {
-                domain: "https://electronic-client.onrender.com",
+                domain: "https://electronic-client.onrender.com/*",
                 maxAge: 86400000, // Cookie expiration time (in milliseconds)
                 httpOnly: true, // Cookie accessible only by the server
                 secure: false, // Cookie only sent over HTTPS if enabled
