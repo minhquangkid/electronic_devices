@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 function Menu(props) {
   function logOutHandle() {
@@ -12,10 +13,12 @@ function Menu(props) {
           <ul id="sidebarnav">
             <li className="sidebar-item">
               {" "}
-              <a className="sidebar-link sidebar-link" href="/home">
-                <i data-feather="home" className="feather-icon"></i>
-                <span className="hide-menu">Dashboard</span>
-              </a>
+              <Link to="/home">
+                <a className="sidebar-link sidebar-link" href="#">
+                  <i data-feather="home" className="feather-icon"></i>
+                  <span className="hide-menu">Dashboard</span>
+                </a>
+              </Link>
             </li>
             <li className="list-divider"></li>
 
@@ -24,10 +27,12 @@ function Menu(props) {
             </li>
             <li className="sidebar-item">
               {" "}
-              <a className="sidebar-link sidebar-link" href="/products">
-                <i data-feather="settings" className="feather-icon"></i>
-                <span className="hide-menu">Products</span>
-              </a>
+              <Link to="/products">
+                <a className="sidebar-link sidebar-link" href="#">
+                  <i data-feather="settings" className="feather-icon"></i>
+                  <span className="hide-menu">Products</span>
+                </a>
+              </Link>
             </li>
             <li className="sidebar-item" onClick={logOutHandle}>
               {" "}
