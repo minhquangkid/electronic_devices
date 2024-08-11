@@ -3,6 +3,9 @@ import { useDispatch } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import { deleteSession } from "../Redux/Action/ActionSession";
 import UserAPI from "../API/UserAPI";
+import { NavLink } from "react-router-dom/cjs/react-router-dom.min";
+import "../Share/Header/Header.css";
+
 function LoginLink(props) {
   const dispatch = useDispatch();
 
@@ -18,9 +21,14 @@ function LoginLink(props) {
 
   return (
     <li className="nav-item" onClick={onRedirect}>
-      <Link className="nav-link" to="/signin">
+      <NavLink
+        className="nav-link"
+        exact
+        to="/signin"
+        activeClassName="selected"
+      >
         ( Logout )
-      </Link>
+      </NavLink>
     </li>
   );
 }
