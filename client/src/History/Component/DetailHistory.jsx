@@ -49,7 +49,7 @@ function DetailHistory(props) {
         <p>Full Name: {information.fullName}</p>
         <p>Phone: {information.phoneNumber}</p>
         <p>Address: {information.address}</p>
-        <p>Total: {information.totalPrice}$</p>
+        <p>Total: {information.totalPrice}(VNĐ)</p>
       </div>
 
       <div className="table-responsive pt-5 pb-5">
