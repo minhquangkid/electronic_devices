@@ -497,29 +497,24 @@ function Detail(props) {
               )
               .map((value) => (
                 <div className="col-lg-3 col-sm-6" key={value._id}>
-                  <div className="product text-center skel-loader">
-                    <div className="d-block mb-3 position-relative">
-                      <img
-                        className="img-fluid w-100"
-                        src={value.img1}
-                        alt="..."
-                      />
-                      <div className="product-overlay">
-                        <ul className="mb-0 list-inline"></ul>
+                  <Link className="reset-anchor" to={`/detail/${value._id}`}>
+                    <div className="product text-center skel-loader">
+                      <div className="d-block mb-3 position-relative">
+                        <img
+                          className="img-fluid w-100"
+                          src={value.img1}
+                          alt="..."
+                        />
+                        <div className="product-overlay">
+                          <ul className="mb-0 list-inline"></ul>
+                        </div>
                       </div>
+                      <h6>{value.name}</h6>
+                      <p className="small text-muted">
+                        {convertMoney(value.price)} VND
+                      </p>
                     </div>
-                    <h6>
-                      <Link
-                        className="reset-anchor"
-                        to={`/detail/${value._id}`}
-                      >
-                        {value.name}
-                      </Link>
-                    </h6>
-                    <p className="small text-muted">
-                      {convertMoney(value.price)} VND
-                    </p>
-                  </div>
+                  </Link>
                 </div>
               ))}
         </div>
