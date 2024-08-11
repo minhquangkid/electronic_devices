@@ -42,22 +42,22 @@ function Detail(props) {
 
   // Hàm này dùng để lấy dữ liệu comment
   // Hàm này sẽ chạy lại phụ thuộc vào id Param
-  useEffect(() => {
-    const fetchData = async () => {
-      const params = {
-        idProduct: id,
-      };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const params = {
+  //       idProduct: id,
+  //     };
 
-      const query = "?" + queryString.stringify(params);
+  //     const query = "?" + queryString.stringify(params);
 
-      const response = await CommentAPI.getCommentProduct(query);
-      console.log(response);
+  //     const response = await CommentAPI.getCommentProduct(query);
+  //     console.log(response);
 
-      set_list_comment(response);
-    };
+  //     set_list_comment(response);
+  //   };
 
-    fetchData();
-  }, [id]);
+  //   fetchData();
+  // }, [id]);
 
   // Hàm thay đổi sao đánh giá
   const onChangeStar = (e) => {
@@ -72,7 +72,7 @@ function Detail(props) {
   // Hàm này dùng để bình luận
   const handlerComment = () => {
     if (idUser === "") {
-      alertify.set("notifier", "position", "bottom-left");
+      alertify.set("notifier", "position", "top-right");
       alertify.error("Vui Lòng Kiểm Tra Đăng Nhập!");
       return;
     }
@@ -206,7 +206,7 @@ function Detail(props) {
         const response = await CartAPI.postAddToCart(query);
 
         console.log(response);
-        alertify.set("notifier", "position", "bottom-left");
+        alertify.set("notifier", "position", "top-right");
         alertify.success("Bạn Đã Thêm Hàng Thành Công!");
       };
 
@@ -214,7 +214,9 @@ function Detail(props) {
     } else {
       // const action = addCart(data);
       // dispatch(action);
-      alert("You are not logged in");
+      // alert("You are not logged in");
+      alertify.set("notifier", "position", "top-right");
+      alertify.error("Please login to continue!");
     }
 
     // history.push("/cart");
@@ -495,29 +497,24 @@ function Detail(props) {
               )
               .map((value) => (
                 <div className="col-lg-3 col-sm-6" key={value._id}>
-                  <div className="product text-center skel-loader">
-                    <div className="d-block mb-3 position-relative">
-                      <img
-                        className="img-fluid w-100"
-                        src={value.img1}
-                        alt="..."
-                      />
-                      <div className="product-overlay">
-                        <ul className="mb-0 list-inline"></ul>
+                  <Link className="reset-anchor" to={`/detail/${value._id}`}>
+                    <div className="product text-center skel-loader">
+                      <div className="d-block mb-3 position-relative">
+                        <img
+                          className="img-fluid w-100"
+                          src={value.img1}
+                          alt="..."
+                        />
+                        <div className="product-overlay">
+                          <ul className="mb-0 list-inline"></ul>
+                        </div>
                       </div>
+                      <h6>{value.name}</h6>
+                      <p className="small text-muted">
+                        {convertMoney(value.price)} VND
+                      </p>
                     </div>
-                    <h6>
-                      <Link
-                        className="reset-anchor"
-                        to={`/detail/${value._id}`}
-                      >
-                        {value.name}
-                      </Link>
-                    </h6>
-                    <p className="small text-muted">
-                      {convertMoney(value.price)} VND
-                    </p>
-                  </div>
+                  </Link>
                 </div>
               ))}
         </div>

@@ -14,7 +14,7 @@ import SignUp from "./Authentication/SignUp";
 import Checkout from "./Checkout/Checkout";
 import History from "./History/History";
 import Shop from "./Shop/Shop";
-import Chat from "./Share/Chat/Chat";
+//import Chat from "./Share/Chat/Chat";
 
 function App() {
   return (

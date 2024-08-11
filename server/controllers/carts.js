@@ -7,7 +7,7 @@ exports.addCart = (req, res, next) => {
   // if (req.cookies.userLoggedIn == null) {
   //   return res.status(403).send({ message: "User doesn't log in" });
   // }
-  console.log(req.cookies.userLoggedIn);
+  // console.log(req.cookies.userLoggedIn);
   User.findById(idUser) // Assuming you have the userId available in the request
     .then((user) => {
       if (!user) {

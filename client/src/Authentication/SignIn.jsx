@@ -6,6 +6,7 @@ import { addSession } from "../Redux/Action/ActionSession";
 import "./Auth.css";
 import queryString from "query-string";
 import CartAPI from "../API/CartAPI";
+import alertify from "alertifyjs";
 
 function SignIn(props) {
   //listCart được lấy từ redux
@@ -100,6 +101,9 @@ function SignIn(props) {
               .then((data) => {
                 console.log(data);
 
+                alertify.set("notifier", "position", "top-right");
+                alertify.success("Login successfully!");
+
                 setErrorPassword(false);
                 setErrorEmail(false);
 
@@ -118,13 +122,15 @@ function SignIn(props) {
                 console.log(error.response.status);
                 console.log(error.response.headers);
 
-                if (error.response.data === "Incorrect password!") {
-                  setErrorPassword(true);
-                } else if (error.response.data === "Incorrect email!") {
-                  setErrorEmail(true);
-                } else {
-                  alert(error.response.data.message);
-                }
+                // if (error.response.data === "Incorrect password!") {
+                //   setErrorPassword(true);
+                // } else if (error.response.data === "Incorrect email!") {
+                //   setErrorEmail(true);
+                // } else {
+                // alert(error.response.data.message);
+                alertify.set("notifier", "position", "top-right");
+                alertify.error(error.response.data.message);
+                //}
                 // console.log(error);
                 return;
               });

@@ -106,7 +106,7 @@ function MainHistory(props) {
                     <p className="mb-0 small">{value.address}</p>
                   </td>
                   <td className="align-middle border-0">
-                    <p className="mb-0 small">${value.totalPrice}</p>
+                    <p className="mb-0 small">{value.totalPrice}(VNĐ)</p>
                   </td>
                   <td className="align-middle border-0">
                     <p className="mb-0 small">

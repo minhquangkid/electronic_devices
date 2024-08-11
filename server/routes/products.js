@@ -1,7 +1,7 @@
 const express = require("express");
 
 const productsController = require("../controllers/products");
-
+const authorize = require("../middleware/author");
 const router = express.Router();
 
 router.get("/products", productsController.getProducts);
