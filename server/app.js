@@ -53,7 +53,8 @@ app.use(
       //maxAge: 10000, // set là 10 giây hết hạn, đây là mili giây, dùng maxAge hoặc expires đều được
       httpOnly: false, // nếu muốn lấy được value của cookie userId thì phải có cái này, vì ban đầu nó bảo mật httpOnly = true
       sameSite: "None", // Required for cross-site cookies
-      secure: true, // Ensure this is true in production (i.e., when using HTTPS)
+      secure: false, // Ensure this is true in production (i.e., when using HTTPS)
+      domain: "electronic-devices-api.onrender.com",
     },
     store: store,
   })
