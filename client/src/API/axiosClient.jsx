@@ -27,6 +27,10 @@ axiosClient.interceptors.response.use(
   },
   (error) => {
     // Handle errors
+    if (error.response && error.response.status === 401) {
+      //unauthorize
+      window.location.href = "/signin";
+    }
     throw error;
   }
 );

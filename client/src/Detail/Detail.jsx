@@ -72,7 +72,7 @@ function Detail(props) {
   // Hàm này dùng để bình luận
   const handlerComment = () => {
     if (idUser === "") {
-      alertify.set("notifier", "position", "bottom-left");
+      alertify.set("notifier", "position", "top-right");
       alertify.error("Vui Lòng Kiểm Tra Đăng Nhập!");
       return;
     }
@@ -206,7 +206,7 @@ function Detail(props) {
         const response = await CartAPI.postAddToCart(query);
 
         console.log(response);
-        alertify.set("notifier", "position", "bottom-left");
+        alertify.set("notifier", "position", "top-right");
         alertify.success("Bạn Đã Thêm Hàng Thành Công!");
       };
 
@@ -214,7 +214,9 @@ function Detail(props) {
     } else {
       // const action = addCart(data);
       // dispatch(action);
-      alert("You are not logged in");
+      // alert("You are not logged in");
+      alertify.set("notifier", "position", "top-right");
+      alertify.error("Please login to continue!");
     }
 
     // history.push("/cart");

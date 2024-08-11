@@ -4,9 +4,9 @@ const productsController = require("../controllers/products");
 const authorize = require("../middleware/author");
 const router = express.Router();
 
-router.get("/products", authorize, productsController.getProducts);
+router.get("/products", productsController.getProducts);
 
-router.get("/products/:id", authorize, productsController.getDetailProduct);
+router.get("/products/:id", productsController.getDetailProduct);
 
-router.get("/products-pagination", authorize, productsController.getPaging);
+router.get("/products-pagination", productsController.getPaging);
 module.exports = router;
