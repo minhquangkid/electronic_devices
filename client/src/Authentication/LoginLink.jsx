@@ -11,8 +11,8 @@ function LoginLink(props) {
       localStorage.clear();
       document.cookie =
         "userLoggedIn=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-        const action = deleteSession("");
-        dispatch(action);
+      const action = deleteSession("");
+      dispatch(action);
     });
   };
 

@@ -37,6 +37,7 @@ const User = require("../models/users");
 // còn đây là cách trả về mà FE sẽ dựa theo message để handle
 
 exports.postLogin = (req, res, next) => {
+  console.log(req.query.email);
   const email = req.query.email;
   const password = req.query.password;
   User.findOne({ email: email })
@@ -48,27 +49,28 @@ exports.postLogin = (req, res, next) => {
         .compare(password, user.password)
         .then((doMatch) => {
           if (doMatch) {
-            req.session.isLoggedIn = true;
-            req.session.user = user;
-            return req.session.save((err) => {
+            req.session.save((err) => {
               if (err) {
                 console.log(err);
                 return res.status(400).send({ message: "Login failed" });
               }
-              res.cookie("userLoggedIn", user.email, {
-                maxAge: 86400000, // Cookie expiration time (in milliseconds)
-                httpOnly: true, // Cookie accessible only by the server
-                secure: false, // Cookie only sent over HTTPS if enabled
-                sameSite: "strict", // Restrict cookie to same-site requests
-              });
-              res.status(200).send(user);
+              req.session.isLoggedIn = true;
+              req.session.user = user;
+              // res.cookie("userLoggedIn", user.email, {
+              //   maxAge: 86400000, // Cookie expiration time (in milliseconds)
+              //   httpOnly: true, // Cookie accessible only by the server
+              //   secure: false, // Cookie only sent over HTTPS if enabled
+              //   sameSite: "strict", // Restrict cookie to same-site requests
+              // });
+              return res.status(200).send(user);
             });
+          } else {
+            return res.status(400).send({ message: "Incorrect password!" });
           }
-          res.status(400).send({ message: "Incorrect password!" });
         })
         .catch((err) => {
           console.log(err);
-          res.status(400).send({ message: "Login failed" });
+          return res.status(400).send({ message: "Login failed" });
         });
     })
     .catch((err) => console.log(err));
@@ -91,17 +93,18 @@ exports.postAdminLogin = (req, res, next) => {
         .compare(password, user.password)
         .then((doMatch) => {
           if (doMatch) {
-            req.session.isLoggedIn = true;
-            req.session.user = user;
-            return req.session.save((err) => {
+            req.session.save((err) => {
+              req.session.isLoggedIn = true;
+              req.session.user = user;
               if (err) {
                 console.log(err);
                 return res.status(400).send({ message: "Login failed" });
               }
-              res.status(200).send(user);
+              return res.status(200).send(user);
             });
+          } else {
+            res.status(400).send({ message: "Incorrect password!" });
           }
-          res.status(400).send({ message: "Incorrect password!" });
         })
         .catch((err) => {
           console.log(err);
