@@ -4,7 +4,7 @@ import UserAPI from "../API/UserAPI";
 import "./Auth.css";
 import queryString from "query-string";
 import MessengerAPI from "../API/MessengerAPI";
-
+import alertify from "alertifyjs";
 SignUp.propTypes = {};
 
 function SignUp(props) {
@@ -101,8 +101,6 @@ function SignUp(props) {
               setPhoneError(true);
               setPasswordError(false);
             } else {
-              console.log("Thanh Cong");
-
               const fetchSignUp = async () => {
                 const params = {
                   fullname: fullname,
@@ -114,10 +112,17 @@ function SignUp(props) {
 
                 const query = "?" + queryString.stringify(params);
 
-                const response = await UserAPI.postSignUp(query);
-                console.log(response);
+                try {
+                  const response = await UserAPI.postSignUp(query);
+                  console.log(response);
 
-                setSuccess(true);
+                  setSuccess(true);
+                  alertify.set("notifier", "position", "top-right");
+                  alertify.success("Register successfully!");
+                } catch (e) {
+                  alertify.set("notifier", "position", "top-right");
+                  alertify.error(e.response.data.message);
+                }
               };
 
               fetchSignUp();

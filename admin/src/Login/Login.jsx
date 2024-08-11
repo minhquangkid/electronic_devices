@@ -3,6 +3,7 @@ import { useHistory } from "react-router-dom";
 import UserAPI from "../API/UserAPI";
 import { AuthContext } from "../Context/AuthContext";
 import queryString from "query-string";
+import alertify from "alertifyjs";
 
 import "./Login.css";
 
@@ -66,7 +67,9 @@ const Login = (props) => {
           console.log(error.response.status);
           console.log(error.response.headers);
           // console.log(error);
-          alert(error.response.data.message);
+          //alert(error.response.data.message);
+          alertify.set("notifier", "position", "top-right");
+          alertify.error(error.response.data.message);
           return;
         });
     };
