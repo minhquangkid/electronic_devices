@@ -42,22 +42,22 @@ function Detail(props) {
 
   // Hàm này dùng để lấy dữ liệu comment
   // Hàm này sẽ chạy lại phụ thuộc vào id Param
-  useEffect(() => {
-    const fetchData = async () => {
-      const params = {
-        idProduct: id,
-      };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const params = {
+  //       idProduct: id,
+  //     };
 
-      const query = "?" + queryString.stringify(params);
+  //     const query = "?" + queryString.stringify(params);
 
-      const response = await CommentAPI.getCommentProduct(query);
-      console.log(response);
+  //     const response = await CommentAPI.getCommentProduct(query);
+  //     console.log(response);
 
-      set_list_comment(response);
-    };
+  //     set_list_comment(response);
+  //   };
 
-    fetchData();
-  }, [id]);
+  //   fetchData();
+  // }, [id]);
 
   // Hàm thay đổi sao đánh giá
   const onChangeStar = (e) => {

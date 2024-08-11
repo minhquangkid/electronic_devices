@@ -377,11 +377,11 @@ function Shop(props) {
 
               <Products products={products} sort={sort} />
 
-              <Pagination
+              {/* <Pagination
                 pagination={pagination}
                 handlerChangePage={handlerChangePage}
                 totalPage={totalPage}
-              />
+              /> */}
             </div>
           </div>
         </div>
