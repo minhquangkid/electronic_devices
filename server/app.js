@@ -39,6 +39,8 @@ const store = new MongoDBStore({
   collection: "sessions",
 });
 //const csrfProtection = csrf();
+// Trust first proxy
+app.set("trust proxy", 1);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
