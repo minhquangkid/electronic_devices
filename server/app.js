@@ -54,7 +54,6 @@ app.use(
       httpOnly: false, // nếu muốn lấy được value của cookie userId thì phải có cái này, vì ban đầu nó bảo mật httpOnly = true
       sameSite: "none", // Required for cross-site cookies
       secure: true, // Ensure this is true in production (i.e., when using HTTPS)
-      domain: "electronic-client.onrender.com",
     },
     store: store,
   })
