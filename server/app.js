@@ -39,22 +39,26 @@ const store = new MongoDBStore({
   collection: "sessions",
 });
 //const csrfProtection = csrf();
+// Trust first proxy
+app.set("trust proxy", 1);
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(
+  // nếu đang sài localhost thì phải comment sameSite, secure lại vì nó sẽ xóa cookie. Còn khi deploy thì phải mở ra
   session({
     key: "mykey",
-    secret: "my secret",
+    secret: "123456",
     resave: false,
     saveUninitialized: false,
+    name: "MyCoolWebAppCookieName", // This needs to be unique per-host.
     cookie: {
-      expires: 1000 * 60 * 60, // thời gian hết hạn là 1 tiếng
+      //expires: 1000 * 60 * 60, // thời gian hết hạn là 1 tiếng
       //maxAge: 10000, // set là 10 giây hết hạn, đây là mili giây, dùng maxAge hoặc expires đều được
       httpOnly: false, // nếu muốn lấy được value của cookie userId thì phải có cái này, vì ban đầu nó bảo mật httpOnly = true
-      sameSite: "None", // Required for cross-site cookies
-      secure: false, // Ensure this is true in production (i.e., when using HTTPS)
-      domain: "electronic-devices-api.onrender.com",
+      sameSite: "none", // Required for cross-site cookies
+      secure: true, // Ensure this is true in production (i.e., when using HTTPS)
+      // domain: "electronic-devices-api.onrender.com",
     },
     store: store,
   })
